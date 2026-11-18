@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMI Calculator</title>
+    <style>
+        input{
+            height: 30px;
+            border: 3px solid transparent;
+            border-radius: 5px;
+            color: rgb(19, 177, 137);
+            background-color: rgb(233, 250, 243);
+         }
+         button{
+            padding: 10px;
+            background-color: rgb(62, 131, 235);
+            border:1px solid rgb(62, 131, 235);
+            border-radius: 10px;
+            color:white;
+         }
+         #emi{
+             margin-top: 10px;
+         }
+         #principal{
+            margin-top: 10px;
+         }
+         #interest{
+            margin-top: 10px;
+         }
+         #amount{
+            margin-top:10px;
+         }
+    </style>
+</head>
+<body><br><br><br><br><br><br>
+    <center>
+        <p>Loan Amount</p>
+        <input type="range" id="loan" min="100000" max="1000000" value="200000" onchange="values()"><div id="p"></div><br><br>
+        <p>Rate of Interest</p>
+        <input type="range" id="rate" min="0" max="100" value="5" onchange="values()"><div id="r"></div><br><br>
+        <p>Loan Tenure</p>
+        <input type="range" id="tenure" min="1" max="50" value="5" onchange="values()"><div id="n"></div><br><br>
+        <button onclick="monthlyemi()">Check Monthly EMI</button><div id="emi"></div><br><br>
+        <button onclick="principal()">Check Principal Amount</button><div id="principal"></div><br><br>
+        <button onclick="interest()">Check Total Interest</button><div id="interest"></div><br><br>
+        <button onclick="amount()">Check Total Amount</button><div id="amount"></div>
+    </center>
+    <script>
+        function values(){
+            let principal = document.getElementById("loan").value;
+            let rate = document.getElementById("rate").value;
+            let years = document.getElementById("tenure").value;
+            document.getElementById("p").innerHTML = principal;
+            document.getElementById("r").innerHTML = rate;
+            document.getElementById("n").innerHTML = years;
+        }
+        values()
+        function monthlyemi(){
+            let p = document.getElementById("loan").value;
+            let rate = document.getElementById("rate").value;
+            let yr = document.getElementById("tenure").value;
+            let r = rate/12/100;
+            let n = yr*12;
+            let rate1 = (1+r)**n;
+            let monthlyemi = (p*r*rate1)/(rate1-1);
+            document.getElementById("emi").innerHTML = "Monthly Emi: "+monthlyemi;
+        }
+        function principal(){
+            let principal = document.getElementById("loan").value;
+            document.getElementById("principal").innerHTML = "Principal Amount: "+principal;            
+        }
+        function interest(){
+            let p = document.getElementById("loan").value;
+            let rate = document.getElementById("rate").value;
+            let yr = document.getElementById("tenure").value;
+            let r = rate/12/100;
+            let n = yr*12;
+            let rate1 = (1+r)**n;
+            let monthlyemi = (p*r*rate1)/(rate1-1);
+            let totalinterest = (monthlyemi*n)-p;
+            document.getElementById("interest").innerHTML = "Total Interest: "+totalinterest;
+        }
+        function amount(){
+             let p = document.getElementById("loan").value;
+            let rate = document.getElementById("rate").value;
+            let yr = document.getElementById("tenure").value;
+            let r = rate/12/100;
+            let n = yr*12;
+            let rate1 = (1+r)**n;
+            let monthlyemi = (p*r*rate1)/(rate1-1);
+            let amount = monthlyemi*n;
+            document.getElementById("amount").innerHTML = "Total Amount: "+amount;
+        }
+    </script>
+</body>
+</html>
